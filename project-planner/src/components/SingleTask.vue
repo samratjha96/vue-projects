@@ -17,7 +17,8 @@
 </template>
 
 <script>
-import { databaseUrl } from "@/lib/database.js";
+import { ref } from "vue";
+import { updateTask } from "@/lib/api.js";
 
 export default {
   props: {
@@ -28,23 +29,24 @@ export default {
       },
     },
   },
-  data() {
-    return {
-      showDetails: false,
-      uri: databaseUrl + this.task.id,
+  setup(props, { emit }) {
+    const showDetails = ref(false);
+
+    const deleteTask = () => {
+      emit("delete", props.task.id);
     };
-  },
-  methods: {
-    deletetask() {
-      this.$emit("delete", this.task.id);
-    },
-    toggleComplete() {
-      fetch(this.uri, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ complete: !this.task.complete }),
-      }).then(() => this.$emit("complete", this.task.id));
-    },
+
+    const toggleComplete = () => {
+      updateTask(props.task.id, { complete: !props.task.complete }).then(() =>
+        emit("complete", props.task.id)
+      );
+    };
+
+    return {
+      showDetails,
+      deleteTask,
+      toggleComplete,
+    };
   },
 };
 </script>
