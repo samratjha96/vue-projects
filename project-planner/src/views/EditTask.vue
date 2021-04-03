@@ -4,13 +4,12 @@
     <input type="text" v-model="title" required />
     <label>Details:</label>
     <textarea v-model="details" required></textarea>
-    <GenericButton @click="updateTask" buttonText="Update Task" />
+    <GenericButton @click="handleUpdate" buttonText="Update Task" />
   </form>
 </template>
 
 <script>
-import { databaseUrl } from "@/lib/database.js";
-import { getTask } from "@/lib/api.js";
+import { getTask, updateTask } from "@/lib/api.js";
 import GenericButton from "@/components/GenericButton.vue";
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -26,16 +25,11 @@ export default {
 
     const title = ref("");
     const details = ref("");
-    const uri = databaseUrl + route.params.id;
 
-    const updateTask = () => {
-      fetch(uri, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title: title.value,
-          details: details.value,
-        }),
+    const handleUpdate = () => {
+      updateTask(route.params.id, {
+        title: title.value,
+        details: details.value,
       })
         .then(() => router.push("/"))
         .catch((err) => console.log(err));
@@ -53,7 +47,7 @@ export default {
     return {
       title,
       details,
-      updateTask,
+      handleUpdate,
     };
   },
 };
