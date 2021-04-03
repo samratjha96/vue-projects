@@ -1,4 +1,14 @@
-# task-planner
+# Task Planner
+
+## Landing Page
+![LandingPage](./assets/LandingPage.jpg)
+
+## Viewing Items
+![ViewingItems](./assets/ListView.png)
+
+## Filtering Items
+![CompletedFiltering](./assets/CompletedFiltering.png)
+![OngoingFiltering](./assets/OngoingFiltering.png)
 
 ## Project setup
 
@@ -10,6 +20,7 @@ yarn install
 
 ```
 yarn serve
+yarn database
 ```
 
 ### Compiles and minifies for production
@@ -24,6 +35,4 @@ yarn build
 yarn lint
 ```
 
-### Customize configuration
 
-See [Configuration Reference](https://cli.vuejs.org/config/).
