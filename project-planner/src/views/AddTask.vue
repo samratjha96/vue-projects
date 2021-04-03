@@ -9,33 +9,36 @@
 </template>
 
 <script>
-import { databaseUrl } from "@/lib/database.js";
+import { addTask } from "@/lib/api.js";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
-  data() {
-    return {
-      title: "",
-      details: "",
-    };
-  },
-  methods: {
-    handleSubmit() {
+  setup() {
+    const title = ref("");
+    const details = ref("");
+
+    const router = useRouter();
+
+    const handleSubmit = () => {
       const task = {
-        title: this.title,
-        details: this.details,
+        title: title.value,
+        details: details.value,
         complete: false,
       };
 
-      fetch(databaseUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(task),
-      })
+      addTask(task)
         .then(() => {
-          this.$router.push("/");
+          router.push("/");
         })
         .catch((err) => console.log(err));
-    },
+    };
+
+    return {
+      title,
+      details,
+      handleSubmit,
+    };
   },
 };
 </script>

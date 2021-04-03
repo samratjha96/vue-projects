@@ -1,5 +1,13 @@
 import { databaseUrl } from "./database";
 
+export const addTask = (task) => {
+  return fetch(databaseUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(task),
+  });
+};
+
 export const getTask = (id) => {
   return fetch(databaseUrl + id);
 };
