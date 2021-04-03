@@ -3,6 +3,9 @@
 ## Landing Page
 ![LandingPage](./assets/LandingPage.png)
 
+## Adding Tasks
+![AddingTasks](./assets/AddingNewTask.png)
+
 ## Viewing Items
 ![ViewingItems](./assets/ListView.png)
 
