@@ -3,21 +3,21 @@
     <button
       @click="updateFilter('all')"
       class="view"
-      :class="{ active: current === 'all' }"
+      :class="{ active: currentSelection === 'all' }"
     >
       View All
     </button>
     <button
       @click="updateFilter('completed')"
       class="completed"
-      :class="{ active: current === 'completed' }"
+      :class="{ active: currentSelection === 'completed' }"
     >
       Completed
     </button>
     <button
       @click="updateFilter('ongoing')"
       class="ongoing"
-      :class="{ active: current === 'ongoing' }"
+      :class="{ active: currentSelection === 'ongoing' }"
     >
       Ongoing
     </button>
@@ -26,16 +26,14 @@
 
 <script>
 export default {
-  props: {
-    current: {
-      type: String,
-      default: function() {
-        return "all";
-      },
-    },
+	data() {
+		return {
+			currentSelection: 'all'
+		}
 	},
   methods: {
     updateFilter(by) {
+			this.currentSelection = by;
       this.$emit("filterChange", by);
     },
   },
