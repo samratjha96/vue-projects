@@ -3,32 +3,33 @@
     <label>Title: </label>
     <input type="text" v-model="title" required />
     <label>Details:</label>
-    <textarea v-model="details" required></textarea>
-    <button>Add Project</button>
+    <textarea v-model="details"></textarea>
+    <button>Add Task</button>
   </form>
 </template>
 
 <script>
+import { databaseUrl } from '@/lib/database.js'
+
 export default {
   data() {
     return {
       title: "",
-			details: "",
-			uri: "http://localhost:3000/projects"
+			details: ""
     };
   },
   methods: {
     handleSubmit() {
-      const project = {
+      const task = {
 				title: this.title,
 				details: this.details,
 				complete: false
 			}
 
-			fetch(this.uri, {
+			fetch(databaseUrl, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(project)
+				body: JSON.stringify(task)
 			})
 			.then(() => {
 				this.$router.push('/')
@@ -82,5 +83,6 @@ form button {
 	border-radius: 6px;
 	font-size: 16px;
 	font-weight: bold;
+  cursor: pointer;
 }
 </style>

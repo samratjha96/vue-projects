@@ -9,19 +9,19 @@ const routes = [
   },
   {
     path: '/add',
-    name: 'AddProject',
+    name: 'AddTask',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AddProject.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/AddTask.vue')
   },
   {
-    path: '/projects/:id',
-    name: 'EditProject',
+    path: '/tasks/:id',
+    name: 'EditTask',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/EditProject.vue'),
+    component: () => import(/* webpackChunkName: "about" */ '../views/EditTask.vue'),
     props: true
   }
 ]

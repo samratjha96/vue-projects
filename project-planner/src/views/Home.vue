@@ -1,61 +1,77 @@
 <template>
   <div class="home">
     <FilterNav @filterChange="currentFilter = $event"/>
-    <div v-if="projects.length">
-      <div v-for="project in filteredProjects" :key="project.id">
-        <SingleProject :project="project" @delete="handleDelete" @complete="handleComplete" />
+    <div v-if="filteredTasks.length">
+      <div v-for="task in filteredTasks" :key="task.id">
+        <SingleTask :task="task" @delete="handleDelete" @complete="handleComplete" />
       </div>
     </div>
+    <div v-else>
+      <EmptyTask />
+    </div>
+    <GenericButton @click="clearAllTasks" buttonText="Clear All"/>
+
   </div>
 </template>
 
 <script>
 
-import SingleProject from '@/components/SingleProject.vue'
+import SingleTask from '@/components/SingleTask.vue'
+import EmptyTask from '@/components/EmptyTask.vue'
 import FilterNav from '@/components/FilterNav.vue'
-
+import GenericButton from '@/components/GenericButton.vue'
+import { databaseUrl } from '@/lib/database.js'
 
 export default {
   name: 'Home',
   components: {
-    SingleProject,
-    FilterNav
+    SingleTask,
+    FilterNav,
+    EmptyTask,
+    GenericButton
   },
   data() {
     return {
-      projects : [],
+      tasks : [],
       currentFilter: 'all'
     }
   },
   computed: {
-      filteredProjects: function() {
+      filteredTasks: function() {
         switch(this.currentFilter) {
           case 'all': {
-            return this.projects
+            return this.tasks
           }
           case 'ongoing': {
-            return this.projects.filter(project => !project.complete)
+            return this.tasks.filter(task => !task.complete)
           }
-          case 'completed': return this.projects.filter(project => project.complete)
+          case 'completed': return this.tasks.filter(task => task.complete)
           default:
-              return this.projects
+              return this.tasks
         }
 
       }
   },
   mounted() {
-    fetch("http://localhost:3000/projects")
+    fetch(databaseUrl)
     .then(res => res.json())
-    .then(data => this.projects = data)
+    .then(data => this.tasks = data)
     .catch(err => console.log(err))
   },
   methods: {
     handleDelete(id) {
-      this.projects = this.projects.filter(project => project.id !== id)
+      fetch(databaseUrl + id, {
+        method: "DELETE",
+      })
+      .then(() => this.tasks = this.tasks.filter(task => task.id !== id))
+      .catch((err) => console.log(err));
     },
     handleComplete(id) {
-      const updatedProject = this.projects.find(project => project.id === id)
-      updatedProject.complete = !updatedProject.complete
+      const updatedTask = this.tasks.find(task => task.id === id)
+      updatedTask.complete = !updatedTask.complete
+    },
+    clearAllTasks() {
+      this.tasks.map(task => this.handleDelete(task.id))
     }
   }
 }
