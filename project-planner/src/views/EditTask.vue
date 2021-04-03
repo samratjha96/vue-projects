@@ -10,7 +10,7 @@
 
 <script>
 import { databaseUrl } from "@/lib/database.js";
-import { getTask } from "@/lib/api.js"
+import { getTask } from "@/lib/api.js";
 import GenericButton from "@/components/GenericButton.vue";
 import { ref, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -42,13 +42,13 @@ export default {
     };
 
     onMounted(() => {
-        getTask(route.params.id)
+      getTask(route.params.id)
         .then((res) => res.json())
         .then((data) => {
-            title.value = data.title;
-            details.value = data.details;
-      });
-    })
+          title.value = data.title;
+          details.value = data.details;
+        });
+    });
 
     return {
       title,
