@@ -11,7 +11,7 @@
 <script>
 import { getTask, updateTask } from "@/lib/api.js";
 import GenericButton from "@/components/GenericButton.vue";
-import { ref, onMounted } from "vue";
+import { reactive, onMounted, toRefs } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -23,13 +23,15 @@ export default {
     const router = useRouter();
     const route = useRoute();
 
-    const title = ref("");
-    const details = ref("");
+    const taskObj = reactive({
+      title: "",
+      details:  ""
+    })
 
     const handleUpdate = () => {
       updateTask(route.params.id, {
-        title: title.value,
-        details: details.value,
+        title: taskObj.title,
+        details: taskObj.details,
       })
         .then(() => router.push("/"))
         .catch((err) => console.log(err));
@@ -39,14 +41,13 @@ export default {
       getTask(route.params.id)
         .then((res) => res.json())
         .then((data) => {
-          title.value = data.title;
-          details.value = data.details;
+          taskObj.title = data.title;
+          taskObj.details = data.details;
         });
     });
 
     return {
-      title,
-      details,
+      ...toRefs(taskObj),
       handleUpdate,
     };
   },
