@@ -1,7 +1,7 @@
-import { databaseUrl } from "./database";
+export const url = "http://localhost:3000/tasks/";
 
 export const addTask = (task) => {
-  return fetch(databaseUrl, {
+  return fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(task),
@@ -9,11 +9,11 @@ export const addTask = (task) => {
 };
 
 export const getTask = (id) => {
-  return fetch(databaseUrl + id);
+  return fetch(url + id);
 };
 
 export const updateTask = (id, body) => {
-  return fetch(databaseUrl + id, {
+  return fetch(url + id, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
@@ -21,11 +21,11 @@ export const updateTask = (id, body) => {
 };
 
 export const deleteTask = (id) => {
-  return fetch(databaseUrl + id, {
+  return fetch(url + id, {
     method: "DELETE",
   });
 };
 
 export const getAllTasks = () => {
-  return fetch(databaseUrl);
+  return fetch(url);
 };
