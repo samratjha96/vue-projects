@@ -10,20 +10,22 @@
 
 <script>
 import { addTask } from "@/lib/api.js";
-import { ref } from "vue";
+import { reactive, toRefs } from "vue";
 import { useRouter } from "vue-router";
 
 export default {
   setup() {
-    const title = ref("");
-    const details = ref("");
+    const taskObj = reactive({
+      title: "",
+      details: "",
+    });
 
     const router = useRouter();
 
     const handleSubmit = () => {
       const task = {
-        title: title.value,
-        details: details.value,
+        title: taskObj.title,
+        details: taskObj.details,
         complete: false,
       };
 
@@ -35,8 +37,7 @@ export default {
     };
 
     return {
-      title,
-      details,
+      ...toRefs(taskObj),
       handleSubmit,
     };
   },
