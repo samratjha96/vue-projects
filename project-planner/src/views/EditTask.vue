@@ -10,46 +10,51 @@
 
 <script>
 import { databaseUrl } from "@/lib/database.js";
+import { getTask } from "@/lib/api.js"
 import GenericButton from "@/components/GenericButton.vue";
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "EditTask",
+  name: "EditTaskComposition",
   components: {
     GenericButton,
   },
-  props: {
-    id: {
-      type: Number,
-    },
-  },
-  data() {
-    return {
-      uri: databaseUrl + this.id,
-      title: "",
-      details: "",
-    };
-  },
-  methods: {
-    updateTask() {
-      fetch(this.uri, {
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+
+    const title = ref("");
+    const details = ref("");
+    const uri = databaseUrl + route.params.id;
+
+    const updateTask = () => {
+      fetch(uri, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          title: this.title,
-          details: this.details,
+          title: title.value,
+          details: details.value,
         }),
       })
-        .then(() => this.$router.push("/"))
+        .then(() => router.push("/"))
         .catch((err) => console.log(err));
-    },
-  },
-  mounted() {
-    fetch(this.uri)
-      .then((res) => res.json())
-      .then((data) => {
-        this.title = data.title;
-        this.details = data.details;
+    };
+
+    onMounted(() => {
+        getTask(route.params.id)
+        .then((res) => res.json())
+        .then((data) => {
+            title.value = data.title;
+            details.value = data.details;
       });
+    })
+
+    return {
+      title,
+      details,
+      updateTask,
+    };
   },
 };
 </script>
