@@ -15,7 +15,7 @@ import { reactive, onMounted, toRefs } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
-  name: "EditTaskComposition",
+  name: "EditTask",
   components: {
     GenericButton,
   },
