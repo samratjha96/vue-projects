@@ -6,6 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
+    "format": "prettier --write .",
     "database": "./node_modules/.bin/json-server --watch data/db.json"
   },
   "dependencies": {
