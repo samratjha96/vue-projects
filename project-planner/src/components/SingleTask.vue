@@ -6,7 +6,7 @@
         <router-link :to="{ name: 'EditTask', params: { id: task.id } }">
           <span class="material-icons">edit</span>
         </router-link>
-        <span @click="deletetask" class="material-icons">delete</span>
+        <span @click="deleteTask" class="material-icons">delete</span>
         <span @click="toggleComplete" class="material-icons tick">done</span>
       </div>
     </div>
