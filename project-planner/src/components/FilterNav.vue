@@ -26,14 +26,14 @@
 
 <script>
 export default {
-	data() {
-		return {
-			currentSelection: 'all'
-		}
-	},
+  data() {
+    return {
+      currentSelection: "all",
+    };
+  },
   methods: {
     updateFilter(by) {
-			this.currentSelection = by;
+      this.currentSelection = by;
       this.$emit("filterChange", by);
     },
   },

@@ -1,17 +1,14 @@
 <template>
-    <div class="empty-task">
-        <p>No tasks available</p>
-    </div>
+  <div class="empty-task">
+    <p>No tasks available</p>
+  </div>
 </template>
 
 <script>
-    export default {
-        
-    }
+export default {};
 </script>
 
 <style>
-
 .empty-task {
   margin: 20px auto;
   background: white;
@@ -21,5 +18,4 @@
   border: 1px solid #e90074;
   text-align: center;
 }
-
 </style>

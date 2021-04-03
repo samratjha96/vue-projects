@@ -9,7 +9,7 @@ export default {
   props: {
     buttonText: {
       type: String,
-      default: function() {
+      default: function () {
         return "";
       },
     },

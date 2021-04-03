@@ -9,32 +9,32 @@
 </template>
 
 <script>
-import { databaseUrl } from '@/lib/database.js'
+import { databaseUrl } from "@/lib/database.js";
 
 export default {
   data() {
     return {
       title: "",
-			details: ""
+      details: "",
     };
   },
   methods: {
     handleSubmit() {
       const task = {
-				title: this.title,
-				details: this.details,
-				complete: false
-			}
+        title: this.title,
+        details: this.details,
+        complete: false,
+      };
 
-			fetch(databaseUrl, {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(task)
-			})
-			.then(() => {
-				this.$router.push('/')
-			})
-			.catch((err) => console.log(err))
+      fetch(databaseUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(task),
+      })
+        .then(() => {
+          this.$router.push("/");
+        })
+        .catch((err) => console.log(err));
     },
   },
 };
@@ -74,15 +74,15 @@ textarea {
 }
 
 form button {
-	display: block;
-	margin: 20px auto 0;
-	background: #00ce89;
-	color: white;
-	padding: 10px;
-	border: 0;
-	border-radius: 6px;
-	font-size: 16px;
-	font-weight: bold;
+  display: block;
+  margin: 20px auto 0;
+  background: #00ce89;
+  color: white;
+  padding: 10px;
+  border: 0;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
 }
 </style>

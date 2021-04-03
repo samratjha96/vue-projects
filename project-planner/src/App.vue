@@ -1,14 +1,14 @@
 <template>
-  <Navbar/>
+  <Navbar />
   <router-view />
 </template>
 
 <script>
-import Navbar from '@/components/Navbar.vue'
+import Navbar from "@/components/Navbar.vue";
 
 export default {
-  components: { Navbar }
-}
+  components: { Navbar },
+};
 </script>
 <style>
 body {
@@ -16,7 +16,7 @@ body {
 }
 
 #app {
-  font-family: 'Montserrat';
+  font-family: "Montserrat";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   max-width: 600px;

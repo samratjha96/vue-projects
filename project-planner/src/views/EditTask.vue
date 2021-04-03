@@ -4,7 +4,7 @@
     <input type="text" v-model="title" required />
     <label>Details:</label>
     <textarea v-model="details" required></textarea>
-    <GenericButton @click="updateTask" buttonText="Update Task"/>
+    <GenericButton @click="updateTask" buttonText="Update Task" />
   </form>
 </template>
 
@@ -13,9 +13,9 @@ import { databaseUrl } from "@/lib/database.js";
 import GenericButton from "@/components/GenericButton.vue";
 
 export default {
-  name: 'EditTask',
+  name: "EditTask",
   components: {
-    GenericButton
+    GenericButton,
   },
   props: {
     id: {

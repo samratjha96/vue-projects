@@ -23,7 +23,7 @@ export default {
   props: {
     task: {
       type: Object,
-      default: function() {
+      default: function () {
         return {};
       },
     },
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     deletetask() {
-		this.$emit("delete", this.task.id)
+      this.$emit("delete", this.task.id);
     },
     toggleComplete() {
       fetch(this.uri, {
