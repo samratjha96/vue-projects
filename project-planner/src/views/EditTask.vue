@@ -25,8 +25,8 @@ export default {
 
     const taskObj = reactive({
       title: "",
-      details:  ""
-    })
+      details: "",
+    });
 
     const handleUpdate = () => {
       updateTask(route.params.id, {

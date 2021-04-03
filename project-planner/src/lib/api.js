@@ -21,11 +21,11 @@ export const updateTask = (id, body) => {
 };
 
 export const deleteTask = (id) => {
-   return fetch(databaseUrl + id, {
+  return fetch(databaseUrl + id, {
     method: "DELETE",
   });
 };
 
 export const getAllTasks = () => {
-    return fetch(databaseUrl)
-}
+  return fetch(databaseUrl);
+};

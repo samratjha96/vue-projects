@@ -34,38 +34,39 @@ export default {
     GenericButton,
   },
   setup() {
-    const tasks = ref([])
-    const currentFilter = ref("all")
+    const tasks = ref([]);
+    const currentFilter = ref("all");
 
     onMounted(() => {
       getAllTasks()
-      .then((res) => res.json())
-      .then((data) => (tasks.value = data))
-      .catch((err) => console.log(err));
-    })
+        .then((res) => res.json())
+        .then((data) => (tasks.value = data))
+        .catch((err) => console.log(err));
+    });
 
     const handleDelete = (id) => {
       deleteTask(id)
-      .then(() => (tasks.value = tasks.value.filter((task) => task.id !== id)))
-      .catch((err) => console.log(err));
-    }
+        .then(
+          () => (tasks.value = tasks.value.filter((task) => task.id !== id))
+        )
+        .catch((err) => console.log(err));
+    };
 
     const handleComplete = (id) => {
       const updatedTask = tasks.value.find((task) => task.id === id);
       updatedTask.complete = !updatedTask.complete;
-    }
+    };
 
     const clearAllTasks = () => {
       tasks.value.map((task) => handleDelete(task.id));
-    }
+    };
 
     const filterChange = (event) => {
-      currentFilter.value = event
-    }
+      currentFilter.value = event;
+    };
 
     const filteredTasks = computed(() => {
-      console.log("Current selection is: ", currentFilter.value)
-       switch (currentFilter.value) {
+      switch (currentFilter.value) {
         case "ongoing": {
           return tasks.value.filter((task) => !task.complete);
         }
@@ -75,15 +76,15 @@ export default {
         default:
           return tasks.value;
       }
-    })
+    });
 
     return {
       handleDelete,
       handleComplete,
       clearAllTasks,
       filteredTasks,
-      filterChange
-    }
-  }
+      filterChange,
+    };
+  },
 };
 </script>
