@@ -1,7 +1,7 @@
 # Task Planner
 
 ## Landing Page
-![LandingPage](./assets/LandingPage.jpg)
+![LandingPage](./assets/LandingPage.png)
 
 ## Viewing Items
 ![ViewingItems](./assets/ListView.png)
