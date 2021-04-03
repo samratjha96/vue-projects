@@ -19,3 +19,13 @@ export const updateTask = (id, body) => {
     body: JSON.stringify(body),
   });
 };
+
+export const deleteTask = (id) => {
+   return fetch(databaseUrl + id, {
+    method: "DELETE",
+  });
+};
+
+export const getAllTasks = () => {
+    return fetch(databaseUrl)
+}

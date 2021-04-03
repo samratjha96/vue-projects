@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <FilterNav @filterChange="currentFilter = $event" />
+    <FilterNav @filterChange="filterChange($event)" />
     <div v-if="filteredTasks.length">
       <div v-for="task in filteredTasks" :key="task.id">
         <SingleTask
@@ -22,7 +22,8 @@ import SingleTask from "@/components/SingleTask.vue";
 import EmptyTask from "@/components/EmptyTask.vue";
 import FilterNav from "@/components/FilterNav.vue";
 import GenericButton from "@/components/GenericButton.vue";
-import { databaseUrl } from "@/lib/database.js";
+import { ref, onMounted, computed } from "vue";
+import { getAllTasks, deleteTask } from "@/lib/api.js";
 
 export default {
   name: "Home",
@@ -32,49 +33,57 @@ export default {
     EmptyTask,
     GenericButton,
   },
-  data() {
-    return {
-      tasks: [],
-      currentFilter: "all",
-    };
-  },
-  computed: {
-    filteredTasks: function () {
-      switch (this.currentFilter) {
-        case "all": {
-          return this.tasks;
-        }
+  setup() {
+    const tasks = ref([])
+    const currentFilter = ref("all")
+
+    onMounted(() => {
+      getAllTasks()
+      .then((res) => res.json())
+      .then((data) => (tasks.value = data))
+      .catch((err) => console.log(err));
+    })
+
+    const handleDelete = (id) => {
+      deleteTask(id)
+      .then(() => (tasks.value = tasks.value.filter((task) => task.id !== id)))
+      .catch((err) => console.log(err));
+    }
+
+    const handleComplete = (id) => {
+      const updatedTask = tasks.value.find((task) => task.id === id);
+      updatedTask.complete = !updatedTask.complete;
+    }
+
+    const clearAllTasks = () => {
+      tasks.value.map((task) => handleDelete(task.id));
+    }
+
+    const filterChange = (event) => {
+      currentFilter.value = event
+    }
+
+    const filteredTasks = computed(() => {
+      console.log("Current selection is: ", currentFilter.value)
+       switch (currentFilter.value) {
         case "ongoing": {
-          return this.tasks.filter((task) => !task.complete);
+          return tasks.value.filter((task) => !task.complete);
         }
         case "completed":
-          return this.tasks.filter((task) => task.complete);
+          return tasks.value.filter((task) => task.complete);
+        case "all":
         default:
-          return this.tasks;
+          return tasks.value;
       }
-    },
-  },
-  mounted() {
-    fetch(databaseUrl)
-      .then((res) => res.json())
-      .then((data) => (this.tasks = data))
-      .catch((err) => console.log(err));
-  },
-  methods: {
-    handleDelete(id) {
-      fetch(databaseUrl + id, {
-        method: "DELETE",
-      })
-        .then(() => (this.tasks = this.tasks.filter((task) => task.id !== id)))
-        .catch((err) => console.log(err));
-    },
-    handleComplete(id) {
-      const updatedTask = this.tasks.find((task) => task.id === id);
-      updatedTask.complete = !updatedTask.complete;
-    },
-    clearAllTasks() {
-      this.tasks.map((task) => this.handleDelete(task.id));
-    },
-  },
+    })
+
+    return {
+      handleDelete,
+      handleComplete,
+      clearAllTasks,
+      filteredTasks,
+      filterChange
+    }
+  }
 };
 </script>
