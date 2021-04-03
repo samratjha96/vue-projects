@@ -25,17 +25,21 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
-  data() {
-    return {
-      currentSelection: "all",
+  setup(props, { emit }) {
+    const currentSelection = ref("all");
+
+    const updateFilter = (by) => {
+      currentSelection.value = by;
+      emit("filterChange", by);
     };
-  },
-  methods: {
-    updateFilter(by) {
-      this.currentSelection = by;
-      this.$emit("filterChange", by);
-    },
+
+    return {
+      currentSelection,
+      updateFilter,
+    };
   },
 };
 </script>
