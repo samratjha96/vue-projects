@@ -3,7 +3,7 @@
         <form @submit.prevent="handleSubmit">
             <input type="text" required placeholder="Email" v-model="email">
             <input type="text" required placeholder="Password" v-model="password">
-            <button>Sign up</button>
+            <button>Login</button>
         </form>
     </div>
 </template>
