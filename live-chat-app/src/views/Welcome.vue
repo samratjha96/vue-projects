@@ -3,40 +3,41 @@
     <h1>Welcome</h1>
     <div v-if="showLogin">
       <h2>Login</h2>
-      <LoginForm/>
-      <p>No account yet? <span @click="showLogin = false">Sign up instead</span></p>
+      <LoginForm />
+      <p>
+        No account yet? <span @click="showLogin = false">Sign up instead</span>
+      </p>
     </div>
     <div v-else>
       <h2>Sign up</h2>
-      <SignupForm/>
+      <SignupForm />
       <p>Already reigstered? <span @click="showLogin = true">Login</span></p>
-      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import SignupForm from "@/components/SignupForm.vue";
 import LoginForm from "@/components/LoginForm.vue";
-import { ref } from 'vue';
+import { ref } from "vue";
 
 export default {
   name: "Welcome",
   components: {
     SignupForm,
-    LoginForm
+    LoginForm,
   },
   setup() {
     const showLogin = ref(true);
 
     return {
-      showLogin
-    }
-  }
+      showLogin,
+    };
+  },
 };
 </script>
 
 <style>
-
 .welcome {
   text-align: center;
   padding: 20px 0;
