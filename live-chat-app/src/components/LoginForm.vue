@@ -20,7 +20,7 @@ import useLogin from "../lib/useLogin";
 
 export default {
   name: "LoginForm",
-  setup() {
+  setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
 
@@ -29,7 +29,7 @@ export default {
     const handleSubmit = async () => {
       await login(email.value, password.value);
       if (!error.value) {
-        console.log("User logged in");
+        emit("login");
       }
     };
     return {

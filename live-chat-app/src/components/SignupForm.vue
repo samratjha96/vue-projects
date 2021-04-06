@@ -25,7 +25,7 @@ import { ref } from "vue";
 import useSignup from "../lib/useSignup";
 
 export default {
-  setup() {
+  setup(props, { emit }) {
     const displayName = ref("");
     const email = ref("");
     const password = ref("");
@@ -34,6 +34,9 @@ export default {
 
     const handleSubmit = async () => {
       await signup(email.value, password.value, displayName.value);
+      if (!error.value) {
+        emit("signup");
+      }
     };
 
     return {
