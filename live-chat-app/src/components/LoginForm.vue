@@ -8,6 +8,7 @@
         placeholder="Password"
         v-model="password"
       />
+      <div class="error">{{ error }}</div>
       <button>Login</button>
     </form>
   </div>
@@ -15,20 +16,27 @@
 
 <script>
 import { ref } from "vue";
+import useLogin from "../lib/useLogin";
 
 export default {
   name: "LoginForm",
-  setup() {
+  setup(props, { emit }) {
     const email = ref("");
     const password = ref("");
 
+    const { error, login } = useLogin();
+
     const handleSubmit = async () => {
-      console.log(email.value, password.value);
+      await login(email.value, password.value);
+      if (!error.value) {
+        emit("login");
+      }
     };
     return {
       email,
       password,
       handleSubmit,
+      error,
     };
   },
 };
