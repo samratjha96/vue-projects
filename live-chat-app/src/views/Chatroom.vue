@@ -1,15 +1,26 @@
 <template>
-  <div class="container"><Navbar />;</div>
+  <div class="container"><Navbar /></div>
 </template>
 
 <script>
 import Navbar from "@/components/Navbar.vue";
+import { useRouter } from "vue-router";
+import getUser from "@/lib/getUser";
+import { watch } from "vue";
+
 export default {
   components: {
     Navbar,
   },
   setup() {
-    return {};
+    const { user } = getUser();
+    const router = useRouter();
+
+    watch(user, () => {
+      if (!user.value) {
+        router.push({ name: "Welcome" });
+      }
+    });
   },
 };
 </script>
