@@ -4,18 +4,43 @@
           <img src="@/assets/logo.png" alt="">
           <h1><router-link :to="{ name: 'Home' }">Playlist Social Network</router-link></h1>
           <div class="links">
-              <button>Logout</button>
-              <router-link class="btn" :to="{ name: 'Signup' }">Sign up</router-link>
-              <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
-
+              <button v-if="user" @click="handleClick">Logout</button>
+              <div v-else>
+                <router-link class="btn" :to="{ name: 'Signup' }">Sign up</router-link>
+                <router-link class="btn" :to="{ name: 'Login' }">Login</router-link>
+              </div>
+            
           </div>
       </nav>
   </div>
 </template>
 
 <script>
-export default {
 
+import useLogout from "@/lib/useLogout";
+import getUser from "@/lib/getUser";
+import { useRouter } from "vue-router"
+
+export default {
+    setup() {
+
+        const { user } = getUser();
+        const { error, logout } = useLogout();
+        const router = useRouter();
+
+        const handleClick = async() => {
+            await logout();
+            if(!error.value) {
+                console.log("User successfully logged out");
+                router.push({ name: "Login"})
+            }
+        }
+
+        return {
+            user,
+            handleClick
+        }
+    }
 }
 </script>
 
