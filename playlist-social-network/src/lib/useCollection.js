@@ -11,7 +11,7 @@ const useCollection = (collection) => {
     isPending.value = true;
     try {
       await projectFirestore.collection(collection).add(doc);
-      isPending.value = true;
+      isPending.value = false;
     } catch (err) {
       console.log(err.message);
       isPending.value = false;
