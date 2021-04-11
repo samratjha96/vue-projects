@@ -3,7 +3,8 @@
       <input type="email" placeholder="Email" v-model="email">
       <input type="password" placeholder="Password" v-model="password">
       <div v-if="error" class="error"> {{ error }}</div>
-      <button>Login</button>
+      <button v-if="!isPending">Login</button>
+      <button v-else disabled>Loading</button>
   </form>
 </template>
 
@@ -13,7 +14,7 @@ import { ref } from '@vue/reactivity'
 
 export default {
     setup() {
-        const { error, login } = useLogin()
+        const { error, login, isPending } = useLogin()
         
         const email = ref("");
         const password = ref("");
@@ -28,7 +29,8 @@ export default {
             email,
             password,
             handleSubmit,
-            error
+            error,
+            isPending
         }
     }
 }
