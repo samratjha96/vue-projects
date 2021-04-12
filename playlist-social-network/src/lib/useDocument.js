@@ -1,29 +1,30 @@
 import { ref } from "vue";
-import { projectFirestore } from "../firebase/config";
+import { projectFirestore } from "@/firebase/config";
 
-const useCollection = collection => {
+const useDocument = (collection, id) => {
   const error = ref(null);
   const isPending = ref(false);
 
-  const addDoc = async doc => {
+  let docRef = projectFirestore.collection(collection).doc(id);
+  const deleteDoc = async () => {
     error.value = null;
     isPending.value = true;
     try {
-      const res = await projectFirestore.collection(collection).add(doc);
+      const res = await docRef.delete();
       isPending.value = false;
       return res;
     } catch (err) {
       console.log(err.message);
       isPending.value = false;
-      error.value = "Could not send the message";
+      error.value = "Could not delete the document";
     }
   };
 
   return {
     error,
-    addDoc,
+    deleteDoc,
     isPending
   };
 };
 
-export default useCollection;
+export default useDocument;
