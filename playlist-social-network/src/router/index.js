@@ -6,16 +6,16 @@ import CreatePlaylist from "@/views/playlists/CreatePlaylist.vue";
 import PlaylistDetails from "@/views/playlists/PlaylistDetails.vue";
 
 // Route guards
-import { projectAuth } from "@/firebase/config"
+import { projectAuth } from "@/firebase/config";
 
 const requireAuth = (to, from, next) => {
-  const user = projectAuth.currentUser
-  if(!user) {
-    next({name: 'Login'});
+  const user = projectAuth.currentUser;
+  if (!user) {
+    next({ name: "Login" });
   } else {
     next();
   }
-}
+};
 
 const routes = [
   {

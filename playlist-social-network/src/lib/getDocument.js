@@ -5,20 +5,18 @@ const getDocument = (collection, id) => {
   const document = ref(null);
   const error = ref(null);
 
-  let documentRef = projectFirestore
-    .collection(collection)
-    .doc(id)
+  let documentRef = projectFirestore.collection(collection).doc(id);
 
   const unsub = documentRef.onSnapshot(
     doc => {
-      if(doc.data()) {
+      if (doc.data()) {
         document.value = {
-            ...doc.data(),
-            id: doc.id
-        }
+          ...doc.data(),
+          id: doc.id
+        };
         error.value = null;
       } else {
-          error.value = "Document does not exist"
+        error.value = "Document does not exist";
       }
     },
     err => {
