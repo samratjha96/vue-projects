@@ -4,7 +4,6 @@ import Login from "@/views/auth/Login.vue";
 import Signup from "@/views/auth/Signup.vue";
 import CreatePlaylist from "@/views/playlists/CreatePlaylist.vue";
 
-
 const routes = [
   {
     path: "/",
